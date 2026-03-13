@@ -1,0 +1,181 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotel Food Ordering</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <h1>Spice Haven</h1>
+      <p class="tagline">Hotel-style biriyani & rice specials</p>
+    </div>
+    <nav class="main-nav">
+      <a href="#menu">Menu</a>
+      <a href="#cart">Cart</a>
+      <a href="#invoice">Invoice</a>
+      <a href="#admin">Manage Menu</a>
+      <a href="#upi">UPI Payment</a>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section id="menu" class="panel panel-main">
+      <h2>Menu</h2>
+      <p class="section-subtitle">
+        Select from our signature hotel dishes and add them to your cart.
+      </p>
+      <div id="menu-filters" class="menu-filters">
+        <button data-filter="all" class="chip chip-active">All</button>
+        <button data-filter="Biriyani" class="chip">Biriyani</button>
+        <button data-filter="Rice" class="chip">Rice</button>
+      </div>
+      <div id="menu-list" class="menu-grid">
+        <!-- Menu items rendered by app.js -->
+      </div>
+    </section>
+
+    <aside id="cart" class="panel panel-side">
+      <h2>Cart</h2>
+      <div id="cart-items" class="cart-items">
+        <!-- Cart rows rendered by app.js -->
+      </div>
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Items</span>
+          <span id="cart-item-count">0</span>
+        </div>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">₹0.00</span>
+        </div>
+        <div class="summary-row summary-row-total">
+          <span>Total</span>
+          <span id="cart-total">₹0.00</span>
+        </div>
+        <div class="cart-actions">
+          <button id="clear-cart-btn" class="btn-secondary">Clear Cart</button>
+          <button id="checkout-btn" class="btn-primary">Generate Invoice</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <section id="invoice" class="panel panel-full">
+    <h2>Invoice</h2>
+    <p class="section-subtitle">
+      Your printable invoice will appear here after checkout.
+    </p>
+    <div id="invoice-container" class="invoice-container">
+      <!-- Invoice content rendered by app.js -->
+    </div>
+    <div class="invoice-actions">
+      <button id="print-invoice-btn" class="btn-primary" disabled>Print / Save as PDF</button>
+    </div>
+  </section>
+
+  <section id="admin" class="panel panel-full">
+    <div class="admin-header">
+      <h2>Manage Menu (CRUD)</h2>
+      <p class="section-subtitle">
+        Add, update, or remove dishes. Changes are saved in this browser only.
+      </p>
+    </div>
+
+    <div class="admin-layout">
+      <form id="menu-form" class="card form-card">
+        <h3 id="menu-form-title">Add New Dish</h3>
+
+        <div class="form-group">
+          <label for="dish-name">Name</label>
+          <input id="dish-name" type="text" placeholder="e.g., Chicken Biriyani" required />
+        </div>
+
+        <div class="form-group">
+          <label for="dish-category">Category</label>
+          <select id="dish-category" required>
+            <option value="Biriyani">Biriyani</option>
+            <option value="Rice">Rice</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dish-price">Price (₹)</label>
+          <input id="dish-price" type="number" min="1" step="1" placeholder="220" required />
+        </div>
+
+        <div class="form-group">
+          <label for="dish-image-url">Image URL</label>
+          <input id="dish-image-url" type="url" placeholder="images/chicken-biriyani.jpg" />
+          <small class="hint">Place open-source images in the images/ folder and reference them here.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="dish-description">Description</label>
+          <textarea id="dish-description" rows="2" placeholder="Short description of the dish"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Save Dish</button>
+          <button type="button" id="reset-form-btn" class="btn-secondary">Clear Form</button>
+        </div>
+
+        <input type="hidden" id="editing-dish-id" />
+      </form>
+
+      <div class="card admin-list-card">
+        <h3>Current Menu Items</h3>
+        <div id="admin-menu-list" class="admin-menu-list">
+          <!-- Admin menu rows rendered by app.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="upi" class="panel panel-full upi-panel">
+    <h2>UPI Payment</h2>
+    <p class="section-subtitle">
+      Scan the UPI QR code below with any supported app to pay your bill, or generate a UPI link.
+    </p>
+    <div class="upi-content">
+      <div class="upi-qr-wrapper">
+        <img src="images/upi-qr.png" alt="UPI QR Code" class="upi-qr" />
+      </div>
+      <div class="upi-details">
+        <p><strong>UPI ID:</strong> your-upi-id@bank</p>
+        <p><strong>Note:</strong> This is a demo website. Do not enter real payment details unless you configure your own UPI ID and QR.</p>
+        <form class="upi-form">
+          <div class="form-group">
+            <label for="upi-amount">Bill Amount (₹)</label>
+            <input id="upi-amount" type="number" min="1" step="1" placeholder="Enter bill amount" />
+          </div>
+          <div class="form-group">
+            <label for="upi-name">Payer Name (optional)</label>
+            <input id="upi-name" type="text" placeholder="Customer name" />
+          </div>
+          <div class="form-group">
+            <label for="upi-note">Payment Note (optional)</label>
+            <input id="upi-note" type="text" placeholder="e.g., Table 5, Lunch bill" />
+          </div>
+          <div class="form-actions">
+            <button id="upi-generate-btn" class="btn-primary" type="submit">Generate UPI Link</button>
+            <a id="upi-link" class="btn-secondary disabled" target="_blank" rel="noopener noreferrer">Enter a valid amount to generate link</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div>
+      <p>&copy; <span id="footer-year"></span> Spice Haven Hotel. All rights reserved.</p>
+      <p class="footer-note">Demo project: hotel-style food ordering with cart and invoice.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
